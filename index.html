@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel="stylesheet">
+    </head>
+    <body>
+        <h3>Cost of Smoking Calculator</h3>
+        <p>Use this calculator to see how much it costs someone to smoke.<br>
+                Saving money is just one more good reason to quit smoking.</p>   
+        <div class="step-1">
+            <img src="G:\Mycode\images\nav1.html.svg">
+            <div id="step1" class="slidercontainer">
+                <div>
+                  <p><b>How much do you pay for a pack of cigarettes?</b></p>
+                  <input type="range" class="range" value="50" min="1" max="100" oninput="rangeSlider(this.value, 'rangeValue1')">
+                  <span id="rangeValue1">50</span>
+                </div>
+                <div>
+                  <p><b>How many cigarettes do you get in one pack?</b></p>
+                  <input type="range" class="range" value="100" min="1" max="200" oninput="rangeSlider(this.value, 'rangeValue2')">
+                  <span id="rangeValue2">100</span>
+                </div>
+                <div>
+                  <p><b>How many cigarettes are you smoking each day?</b></p>
+                  <input type="range" class="range" value="50" min="1" max="100" oninput="rangeSlider(this.value, 'rangeValue3')">
+                  <span id="rangeValue3">50</span>
+                </div>
+                <div>
+                  <p><b>When did you start smoking?</b></p>
+                  <input type="range" class="range" value="1978" min="1940" max="2016" oninput="rangeSlider(this.value, 'rangeValue4')">
+                  <span id="rangeValue4">1978</span>
+                </div>
+                <div class="button-1">
+                  <img src="G:\Mycode\images\calculateButton.html.svg" onclick="showStep2()">
+                </div>
+              </div>
+            
+        </div>
+        <div class="step-2">
+            <img src="G:\Mycode\images\nav2.html.svg">
+            <div class="slidercontainer">
+                <div class="cost-1">
+                <div class="day">
+                    <p class="left-aligned"><b>Cost Per Day:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="rangeValue5"><b>25.00</b></span></p>
+                </div>
+                <div class="week">
+                    <p class="right-aligned"><b>Cost Per Week:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="rangeValue6"><b>175.00</b></span></p>
+                </div>
+                </div>
+                <div class="cost-2">
+                <div class="month">
+                    <p class="left-aligned"><b>Cost Per Month:</b>&nbsp;&nbsp;&nbsp;&nbsp;<span id="rangeValue7"><b>750.00</b></span></p>
+                </div>
+                <div class="year">
+                    <p class="right-aligned"><b>Cost Per Year:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="rangeValue8"><b>91255.00</b></span></p>
+                </div>
+                </div>
+                <span class="divider"></span>
+                <div class="cigarettes">
+                    <p><b>TOTAL COST OF YOUR CIGARETTES TO DATE:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="totalCostToDate"><b>419,750</b></span></p>
+                  </div>
+                  <div class="smoking">
+                    <p><b>COST IF YOU CONTINUE SMOKING FOR:</b>
+                      <select id="years" onchange="calculateFutureCost()">
+                        <option value="0"></option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                        <option value="60">60</option>
+                      </select>&nbsp;&nbsp;&nbsp;
+                      <span><b>Years:</b></span>
+                      <span id="futureCost"><b>0</b></span></p>
+                  </div>
+                <span class="divider"></span>
+                <div class="button-2">
+                <img src="G:\Mycode\images\recalculateButton.html.svg" onclick="showStep1()">
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+    <script>
+        function showStep2() {
+            document.querySelector('.step-1').style.display = 'none';
+            document.querySelector('.step-2').style.display = 'block';
+        }
+        function showStep1() {
+            document.querySelector('.step-1').style.display = 'block';
+            document.querySelector('.step-2').style.display = 'none';
+        }
+        function rangeSlider(value, id) {
+      document.getElementById(id).textContent = value;
+    }
+    function calculateTotalCostToDate() {
+      const pricePerPack = document.getElementById('rangeValue1').textContent;
+      const cigarettesPerPack = document.getElementById('rangeValue2').textContent;
+      const cigarettesPerDay = document.getElementById('rangeValue3').textContent;
+      const startYear = document.getElementById('rangeValue4').textContent;
+      const currentYear = new Date().getFullYear();
+
+      const daysSmoked = (currentYear - startYear) * 365;
+      const packsPerDay = cigarettesPerDay / cigarettesPerPack;
+      const totalCostToDate = daysSmoked * packsPerDay * pricePerPack;
+
+      document.getElementById('totalCostToDate').textContent = totalCostToDate.toFixed(2);
+    }
+
+    function calculateFutureCost() {
+      const pricePerPack = document.getElementById('rangeValue1').textContent;
+      const cigarettesPerPack = document.getElementById('rangeValue2').textContent;
+      const cigarettesPerDay = document.getElementById('rangeValue3').textContent;
+      const years = document.getElementById('years').value;
+
+      const daysFuture = years * 365;
+      const packsPerDay = cigarettesPerDay / cigarettesPerPack;
+      const futureCost = daysFuture * packsPerDay * pricePerPack;
+
+      document.getElementById('futureCost').textContent = futureCost.toFixed(0);
+    }
+
+    </script>
+</html>
